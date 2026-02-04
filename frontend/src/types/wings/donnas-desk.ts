@@ -244,3 +244,72 @@ export interface PersonaSignedMessage {
   timestamp: string;
   signature: string;
 }
+
+/**
+ * Donna task
+ */
+export interface DonnaTask {
+  id: string;
+  title: string;
+  status: 'queued' | 'running' | 'completed' | 'failed';
+  priority: 'low' | 'medium' | 'high';
+  estimatedTime: number;
+  completedAt?: string;
+  result?: string;
+  progress?: number;
+  isRecurring?: boolean;
+}
+
+/**
+ * Donna notification
+ */
+export interface DonnaNotification {
+  id: string;
+  type: 'alert' | 'success' | 'info' | 'error';
+  title: string;
+  message: string;
+  timestamp: string;
+  read: boolean;
+  priority?: 'low' | 'medium' | 'high';
+}
+
+/**
+ * Donna insight
+ */
+export interface DonnaInsight {
+  id: string;
+  type: 'prediction' | 'optimization' | 'reminder' | 'alert';
+  title: string;
+  description: string;
+  confidence: number;
+  suggestedAction: string;
+  impact: 'low' | 'medium' | 'high';
+}
+
+/**
+ * Calendar event
+ */
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  time: string;
+  duration: number;
+  type: 'meeting' | 'external' | 'deadline' | 'reminder';
+  attendees?: number;
+  location?: string;
+  isRecurring?: boolean;
+  priority?: 'low' | 'medium' | 'high';
+}
+
+/**
+ * Delegation rule
+ */
+export interface DelegationRule {
+  id: string;
+  name: string;
+  trigger: string;
+  action: string;
+  delegateTo: 'automated' | 'paralegal' | 'junior_associate' | 'senior_associate';
+  status: 'active' | 'paused' | 'disabled';
+  lastRun?: string;
+}

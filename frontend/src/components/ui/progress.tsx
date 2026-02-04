@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import * as ProgressPrimitive from '@radix-ui/react-progress';
 import { motion, useSpring, useTransform } from 'framer-motion';
 import { cva, type VariantProps } from 'class-variance-authority';
 
@@ -58,43 +57,34 @@ const indicatorVariants = cva(
 // BASIC PROGRESS COMPONENT
 // ============================================
 
-interface ProgressProps
-  extends React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>,
-  VariantProps<typeof progressVariants> {
+export interface ProgressProps extends VariantProps<typeof progressVariants> {
+  className?: string;
+  value?: number;
   indicatorClassName?: string;
   showValue?: boolean;
   animated?: boolean;
 }
 
-const Progress = React.forwardRef<
-  React.ElementRef<typeof ProgressPrimitive.Root>,
-  ProgressProps
->(({ className, value, variant, size, indicatorClassName, showValue, animated = true, ...props }, ref) => {
-  // Animated value for smooth transitions
-  const springValue = useSpring(value || 0, { stiffness: 100, damping: 20 });
-  const displayValue = animated ? springValue : { get: () => value || 0 };
-
-  return (
-    <div className="relative">
-      <ProgressPrimitive.Root
-        ref={ref}
-        className={cn(progressVariants({ variant, size }), className)}
-        {...props}
-      >
-        <ProgressPrimitive.Indicator
-          className={cn(indicatorVariants({ variant }), indicatorClassName)}
-          style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
-        />
-      </ProgressPrimitive.Root>
-      {showValue && (
-        <span className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full pl-2 text-xs text-slate-400">
-          {Math.round(value || 0)}%
-        </span>
-      )}
-    </div>
-  );
-});
-Progress.displayName = ProgressPrimitive.Root.displayName;
+const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
+  ({ className, value = 0, variant, size, indicatorClassName, showValue, animated = true, ...props }, ref) => {
+    return (
+      <div className="relative" ref={ref} {...props}>
+        <div className={cn(progressVariants({ variant, size }), className)}>
+          <div
+            className={cn(indicatorVariants({ variant }), indicatorClassName)}
+            style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+          />
+        </div>
+        {showValue && (
+          <span className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full pl-2 text-xs text-slate-400">
+            {Math.round(value || 0)}%
+          </span>
+        )}
+      </div>
+    );
+  }
+);
+Progress.displayName = 'Progress';
 
 // ============================================
 // PRESTIGE METER (CIRCULAR GAUGE)
@@ -246,7 +236,6 @@ const XPProgressBar = React.memo(function XPProgressBar({
   className,
 }: XPProgressBarProps) {
   const percentage = Math.min((currentXP / xpToNextLevel) * 100, 100);
-  const springProgress = useSpring(percentage, { stiffness: 100, damping: 20 });
 
   return (
     <div className={cn('space-y-2', className)}>
@@ -273,9 +262,6 @@ const XPProgressBar = React.memo(function XPProgressBar({
         {/* Progress fill */}
         <motion.div
           className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500"
-          style={{
-            width: animated ? springProgress.get() + '%' : percentage + '%',
-          }}
           initial={{ width: 0 }}
           animate={{ width: percentage + '%' }}
           transition={{ duration: 0.5, ease: 'easeOut' }}

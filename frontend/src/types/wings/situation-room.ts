@@ -256,3 +256,169 @@ export interface ViewPerspective {
   priorities: string[];
   dashboardLayout: string;
 }
+
+/**
+ * Crisis alert
+ */
+export interface CrisisAlert {
+  id: string;
+  type: 'margin_breach' | 'liquidity_crisis' | 'counterparty_default' | 'system_failure';
+  severity: 'warning' | 'critical' | 'emergency';
+  title: string;
+  description: string;
+  triggeredAt: string;
+  affectedAccounts: string[];
+  estimatedImpact: number;
+  actions: CrisisAction[];
+}
+
+/**
+ * Crisis action
+ */
+export interface CrisisAction {
+  id: string;
+  label: string;
+  type: 'primary' | 'secondary' | 'destructive';
+  action: string;
+}
+
+/**
+ * Crisis log entry
+ */
+export interface CrisisLogEntry {
+  id: string;
+  timestamp: string;
+  source: 'system' | 'ai' | 'user' | 'action';
+  message: string;
+  severity?: 'info' | 'warning' | 'error';
+  metadata?: Record<string, unknown>;
+}
+
+/**
+ * Impact geography data
+ */
+export interface ImpactGeographyData {
+  id: string;
+  region: string;
+  coordinates: { lat: number; lng: number };
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  impact: number;
+  affectedEntities: number;
+}
+
+/**
+ * Playbook step
+ */
+export interface PlaybookStep {
+  id: string;
+  order: number;
+  name: string;
+  description: string;
+  status: 'pending' | 'in_progress' | 'completed' | 'skipped' | 'failed';
+  assignee?: string;
+  startedAt?: string;
+  completedAt?: string;
+  notes?: string;
+}
+
+/**
+ * Stress test result
+ */
+export interface StressTestResult {
+  id: string;
+  scenarioName: string;
+  executedAt: string;
+  duration: number;
+  status: 'passed' | 'failed' | 'warning';
+  metrics: StressTestMetric[];
+  timeline: { time: number; value: number }[];
+}
+
+/**
+ * Stress test metric
+ */
+export interface StressTestMetric {
+  name: string;
+  baseline: number;
+  stressed: number;
+  change: number;
+  threshold: number;
+  passed: boolean;
+}
+
+/**
+ * Incident status
+ */
+export interface IncidentStatus {
+  id: string;
+  title: string;
+  status: 'open' | 'investigating' | 'mitigating' | 'resolved';
+  priority: 'low' | 'medium' | 'high' | 'critical';
+  assignee?: string;
+  createdAt: string;
+  updatedAt: string;
+  progress: number;
+}
+
+/**
+ * Escalation contact
+ */
+export interface EscalationContact {
+  id: string;
+  name: string;
+  role: string;
+  phone: string;
+  email: string;
+  availability: 'available' | 'busy' | 'offline';
+  tier: number;
+  lastContacted?: string;
+}
+
+/**
+ * Response time metric
+ */
+export interface ResponseTimeMetric {
+  category: string;
+  avgTime: number;
+  targetTime: number;
+  incidents: number;
+  trend: 'improving' | 'stable' | 'degrading';
+}
+
+/**
+ * Live risk metric
+ */
+export interface LiveRiskMetric {
+  id: string;
+  name: string;
+  value: number;
+  threshold: number;
+  unit: string;
+  status: 'normal' | 'warning' | 'critical';
+  trend: 'up' | 'down' | 'stable';
+  lastUpdated: string;
+}
+
+/**
+ * Crisis scenario
+ */
+export interface CrisisScenario {
+  id: string;
+  name: string;
+  description: string;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  stages: CrisisStage[];
+  estimatedDuration: number;
+}
+
+/**
+ * Crisis stage
+ */
+export interface CrisisStage {
+  id: string;
+  name: string;
+  description: string;
+  duration: number;
+  actions: string[];
+}
+

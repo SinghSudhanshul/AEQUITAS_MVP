@@ -297,3 +297,78 @@ export interface RainmakerAnalytics {
   ranking: number;
   achievements: string[];
 }
+
+/**
+ * Decision item for approval queue
+ */
+export interface DecisionItem {
+  id: string;
+  title: string;
+  type: 'financial' | 'legal' | 'trading' | 'operational';
+  amount?: number;
+  requester: string;
+  urgency: 'low' | 'medium' | 'high';
+  summary: string;
+  impact: string;
+}
+
+/**
+ * Strategic goal
+ */
+export interface StrategicGoal {
+  id: string;
+  title: string;
+  target: string;
+  current: string;
+  progress: number;
+  deadline: string;
+  priority: 'low' | 'medium' | 'high';
+  status: 'in_progress' | 'completed' | 'at_risk';
+}
+
+/**
+ * Portfolio data
+ */
+export interface PortfolioData {
+  date: string;
+  portfolioValue: number;
+  margin: number;
+  pnl: number;
+}
+
+/**
+ * Harvey message
+ */
+export interface HarveyMessage {
+  id: string;
+  role: 'harvey' | 'user';
+  content: string;
+  timestamp: string;
+  mood?: 'confident' | 'strategic' | 'aggressive' | 'thoughtful';
+  actionItems?: string[];
+}
+
+/**
+ * Memo item
+ */
+export interface MemoItem {
+  id: string;
+  title: string;
+  type: 'strategy' | 'analysis' | 'legal' | 'operations';
+  author: string;
+  date: string;
+  status: 'draft' | 'final' | 'archived';
+  views: number;
+  version: number;
+}
+
+/**
+ * Team performance data
+ */
+export interface TeamPerformanceData {
+  name: string;
+  score: number;
+  target: number;
+  deals: number;
+  xpEarned: number;
+}
