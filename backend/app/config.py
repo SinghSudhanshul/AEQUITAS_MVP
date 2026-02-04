@@ -132,6 +132,24 @@ class Settings(BaseSettings):
         return f"https://{self.AUTH0_DOMAIN}/.well-known/jwks.json"
     
     # ==========================================================================
+    # GOOGLE OAUTH
+    # ==========================================================================
+    GOOGLE_CLIENT_ID: str = ""
+    GOOGLE_CLIENT_SECRET: str = ""
+    
+    # ==========================================================================
+    # MICROSOFT OAUTH
+    # ==========================================================================
+    MICROSOFT_CLIENT_ID: str = ""
+    MICROSOFT_CLIENT_SECRET: str = ""
+    MICROSOFT_TENANT_ID: str = "common"  # Use "common" for multi-tenant
+    
+    # ==========================================================================
+    # API BASE URL (for OAuth callbacks)
+    # ==========================================================================
+    API_BASE_URL: str = "http://localhost:8000"
+    
+    # ==========================================================================
     # MINIO (Object Storage)
     # ==========================================================================
     MINIO_ENDPOINT: str = "localhost:9000"
