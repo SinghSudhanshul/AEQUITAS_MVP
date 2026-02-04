@@ -1,0 +1,62 @@
+# ==============================================================================
+# AEQUITAS LV-COP BACKEND - MANIFEST
+# ==============================================================================
+# Files to include in source distribution
+# ==============================================================================
+
+include LICENSE
+include README.md
+include requirements.txt
+include requirements-dev.txt
+include requirements-ml.txt
+include pyproject.toml
+include alembic.ini
+include pytest.ini
+include ruff.toml
+include Makefile
+
+# Include app package
+recursive-include app *.py
+recursive-include app *.yaml
+recursive-include app *.json
+
+# Include migrations
+recursive-include app/database/migrations *.py
+recursive-include app/database/migrations *.mako
+
+# Include documentation
+recursive-include docs *.md
+recursive-include docs *.yaml
+recursive-include docs *.json
+
+# Include data templates
+recursive-include data/templates *.csv
+recursive-include data/templates *.xlsx
+
+# Include sample data
+recursive-include data/sample *.csv
+recursive-include data/sample *.json
+
+# Exclude compiled files
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude __pycache__
+global-exclude *.so
+global-exclude .DS_Store
+
+# Exclude test files from distribution
+prune tests
+prune scripts
+
+# Exclude environment files
+exclude .env
+exclude .env.local
+exclude .env.test
+
+# Exclude IDE and tool files
+prune .vscode
+prune .idea
+prune .mypy_cache
+prune .pytest_cache
+prune .ruff_cache
+prune htmlcov
